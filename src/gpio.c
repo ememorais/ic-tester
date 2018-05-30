@@ -22,121 +22,56 @@
 #define GPIO_PORT_M 0x0800
 #define GPIO_PORT_N 0x1000
 
-#define GPIO_PORTS (GPIO_PORT_A|GPIO_PORT_D|GPIO_PORT_J|\
-					GPIO_PORT_K|GPIO_PORT_M|GPIO_PORT_N|GPIO_PORT_E)
+#define GPIO_PORTS (GPIO_PORT_D|GPIO_PORT_M)
 
-#define GPIO_PORTD_KB_ROWS 		(*((volatile uint32_t *)0x4005B03C))
-#define GPIO_PORTJ_BOTOES 		(*((volatile uint32_t *)0x4006003C))
-#define GPIO_PORTK_LCD_DATA		(*((volatile uint32_t *)0x400613FC))
-#define GPIO_PORTM_LCD_CTRL 	(*((volatile uint32_t *)0x4006301C))
-#define GPIO_PORTM_KB_COLUMNS (*((volatile uint32_t *)0x400631E0))
-#define GPIO_PORTN_LEDS   		(*((volatile uint32_t *)0x4006403C))
+#define GPIO_PORTD_KB_ROWS      (*((volatile uint32_t *)0x4005B03C))
+#define GPIO_PORTM_KB_COLUMNS   (*((volatile uint32_t *)0x400631E0))
 
 
-// -------------------------------------------------------------------------------
-// Função GPIO_Init
-// Inicializa os ports J e N
-// Parâmetro de entrada: Não tem
-// Parâmetro de saída: Não tem
+ /*
+  * Inicializa todas as portas de GPIO que serÃ£o utilizadas no projeto.
+  */
 void GPIO_Init(void)
 {
-	//1a. Ativar o clock para a porta setando o bit correspondente no registrador RCGCGPIO
-	SYSCTL_RCGCGPIO_R |= GPIO_PORTS;
+    // 1a. Ativar o clock para a porta setando o bit correspondente no registrador RCGCGPIO
+    SYSCTL_RCGCGPIO_R |= GPIO_PORTS;
 
-	//1b.   após isso verificar no PRGPIO se a porta está pronta para uso.
-  	while((SYSCTL_PRGPIO_R & (GPIO_PORTS) ) != (GPIO_PORTS) ){};
-	
-	// 2. Destravar a porta somente se for o pino PD7 e PE7
-		
-	// 3. Limpar o AMSEL para desabilitar a analógica
-	GPIO_PORTA_AHB_AMSEL_R  = 0x00;
-	GPIO_PORTD_AHB_AMSEL_R	= 0x00;
-	GPIO_PORTJ_AHB_AMSEL_R 	= 0x00;
-	GPIO_PORTK_AMSEL_R 		= 0x00;
-	GPIO_PORTM_AMSEL_R		= 0x00;
-	GPIO_PORTN_AMSEL_R 		= 0x00;
-	GPIO_PORTE_AHB_AMSEL_R = 0x08;
-		
-	// 4. Limpar PCTL para selecionar o GPIO
-	GPIO_PORTA_AHB_PCTL_R	= 0x11;
-	GPIO_PORTD_AHB_PCTL_R	= 0x00;
-	GPIO_PORTK_PCTL_R		= 0x00;
-	GPIO_PORTJ_AHB_PCTL_R 	= 0x00;
-	GPIO_PORTK_PCTL_R		= 0x00;
-	GPIO_PORTM_PCTL_R		= 0x00;
-	GPIO_PORTN_PCTL_R 		= 0x00;
-	GPIO_PORTE_AHB_PCTL_R = 0x00;
+    // 1b.   apÃ³s isso verificar no PRGPIO se a porta estÃ¡ pronta para uso.
+      while((SYSCTL_PRGPIO_R & (GPIO_PORTS) ) != (GPIO_PORTS) ){};
 
-	// 5. DIR para 0 se for entrada, 1 se for saída
-	GPIO_PORTD_AHB_DIR_R	= 0x00;
-	GPIO_PORTJ_AHB_DIR_R 	= 0x00;
-	GPIO_PORTK_DIR_R		= 0xFF;
-	GPIO_PORTM_DIR_R		= 0x7F;
-	GPIO_PORTN_DIR_R 		= 0x03;
-	GPIO_PORTE_AHB_DIR_R = 0x00;
-		
-	// 6. Limpar os bits AFSEL para 0 para selecionar GPIO sem função alternativa
-	GPIO_PORTA_AHB_AFSEL_R	= 0x03;
-	GPIO_PORTD_AHB_AFSEL_R	= 0x00;
-	GPIO_PORTJ_AHB_AFSEL_R 	= 0x00;
-	GPIO_PORTK_AFSEL_R		= 0x00;
-	GPIO_PORTM_AFSEL_R		= 0x00;
-	GPIO_PORTN_AFSEL_R 		= 0x00;
-	GPIO_PORTE_AHB_AFSEL_R = 0x08;
+    // 2. Destravar a porta somente se for o pino PD7 e PE7
 
-		
-	// 7. Setar os bits de DEN para habilitar I/O digital
-	GPIO_PORTA_AHB_DEN_R	= 0x03;
-	GPIO_PORTD_AHB_DEN_R	= 0x0F;
-	GPIO_PORTJ_AHB_DEN_R 	= 0x03;
-	GPIO_PORTK_DEN_R		= 0xFF;
-	GPIO_PORTM_DEN_R		= 0x7F; 
-	GPIO_PORTN_DEN_R 		= 0x03;
-	GPIO_PORTE_AHB_DEN_R = 0x00;
+    // 3. Limpar o AMSEL para desabilitar a analÃ³gica
+    GPIO_PORTD_AHB_AMSEL_R	= 0x00;
+    GPIO_PORTM_AMSEL_R		= 0x00;
 
-	
-	// 8. Habilitar resistor de pull-up interno, setar PUR para 1
-	GPIO_PORTJ_AHB_PUR_R 	= 0x03;
-	GPIO_PORTD_AHB_PUR_R	= 0x0F;
+    // 4. Limpar PCTL para selecionar o GPIO
+    GPIO_PORTD_AHB_PCTL_R	= 0x00;
+    GPIO_PORTM_PCTL_R		= 0x00;
 
-}	
+    // 5. DIR para 0 se for entrada, 1 se for saÃ­da
+    GPIO_PORTD_AHB_DIR_R	= 0x00;
+    GPIO_PORTM_DIR_R		= 0x7F;
+
+    // 6. Limpar os bits AFSEL para 0 para selecionar GPIO sem funÃ§Ã£o alternativa
+    GPIO_PORTD_AHB_AFSEL_R	= 0x00;
+    GPIO_PORTM_AFSEL_R		= 0x00;
+
+
+    // 7. Setar os bits de DEN para habilitar I/O digital
+    GPIO_PORTD_AHB_DEN_R	= 0x0F;
+    GPIO_PORTM_DEN_R		= 0x7F;
+
+    // 8. Habilitar resistor de pull-up interno, setar PUR para 1
+    GPIO_PORTD_AHB_PUR_R	= 0x0F;
+}
 
 uint32_t PortD_Input(void)
 {
-	return GPIO_PORTD_KB_ROWS;
-}
-// -------------------------------------------------------------------------------
-// Função PortJ_Input
-// Lê os valores de entrada do port J
-// Parâmetro de entrada: Não tem
-// Parâmetro de saída: o valor da leitura do port
-uint32_t PortJ_Input(void)
-{
-	return GPIO_PORTJ_BOTOES;
+    return GPIO_PORTD_KB_ROWS;
 }
 
-void PortK_Output(uint32_t valor)
+void PortM_OutputKeyboard(uint32_t value)
 {
-	GPIO_PORTK_LCD_DATA = valor;
-}
-
-void PortM_Output(uint32_t valor)
-{
-	GPIO_PORTM_LCD_CTRL = valor;
-}
-
-void PortM_OutputKeyboard(uint32_t valor)
-{
-	GPIO_PORTM_KB_COLUMNS = valor;
-}
-
-// -------------------------------------------------------------------------------
-// Função PortN_Output
-// Escreve os valores no port N
-// Parâmetro de entrada: Valor a ser escrito
-// Parâmetro de saída: não tem
-void PortN_Output(uint32_t valor)
-{
-	//Ponteiro para o valor dos bits com leitura amigável
-	GPIO_PORTN_LEDS = valor;
+    GPIO_PORTM_KB_COLUMNS = value;
 }
