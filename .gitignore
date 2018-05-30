@@ -1,0 +1,8 @@
+*.uvguix
+*.uvguix*
+*.~*
+*.scvd
+Listings/
+Objects/
+.vscode/
+~$*.*
