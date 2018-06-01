@@ -5,3 +5,4 @@
 #include "gpio.h"
 #include "keyboard.h"
 #include "timer.h"
+#include "i2c.h"

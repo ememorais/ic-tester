@@ -13,6 +13,8 @@ int main(void)
     GPIO_Init();
     Keyboard_Init();
     Timer_Init();
+    I2C_Init();
+    I2C_Oled_Init();
 
     while(1)
     {

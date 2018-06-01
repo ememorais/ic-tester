@@ -6,6 +6,7 @@
 #define __GPIO_H__
 
 #include <stdint.h>
+#include "tm4c1294ncpdt.h"
 
 void GPIO_Init(void);
 

@@ -1,12 +1,8 @@
 // gpio.c
-// Desenvolvido para a placa EK-TM4C1294XL
-// Inicializa portas D, F, J, K, M, N e E
 // Marcelo Fernandes e Bruno Colombo
 
 
-#include <stdint.h>
-
-#include "tm4c1294ncpdt.h"
+#include "gpio.h"
 
 #define GPIO_PORT_A 0x0001
 #define GPIO_PORT_B 0x0002
@@ -22,7 +18,7 @@
 #define GPIO_PORT_M 0x0800
 #define GPIO_PORT_N 0x1000
 
-#define GPIO_PORTS (GPIO_PORT_D|GPIO_PORT_M)
+#define GPIO_PORTS (GPIO_PORT_B|GPIO_PORT_D|GPIO_PORT_M)
 
 #define GPIO_PORTD_KB_ROWS      (*((volatile uint32_t *)0x4005B03C))
 #define GPIO_PORTM_KB_COLUMNS   (*((volatile uint32_t *)0x400631E0))
@@ -42,28 +38,35 @@ void GPIO_Init(void)
     // 2. Destravar a porta somente se for o pino PD7 e PE7
 
     // 3. Limpar o AMSEL para desabilitar a analógica
+    GPIO_PORTB_AHB_AMSEL_R  = 0x00;
     GPIO_PORTD_AHB_AMSEL_R	= 0x00;
     GPIO_PORTM_AMSEL_R		= 0x00;
 
     // 4. Limpar PCTL para selecionar o GPIO
     GPIO_PORTD_AHB_PCTL_R	= 0x00;
     GPIO_PORTM_PCTL_R		= 0x00;
+    GPIO_PORTB_AHB_PCTL_R   = 0x2200;
 
     // 5. DIR para 0 se for entrada, 1 se for saída
     GPIO_PORTD_AHB_DIR_R	= 0x00;
     GPIO_PORTM_DIR_R		= 0x7F;
 
     // 6. Limpar os bits AFSEL para 0 para selecionar GPIO sem função alternativa
+    GPIO_PORTB_AHB_AFSEL_R  = 0x0C;
     GPIO_PORTD_AHB_AFSEL_R	= 0x00;
     GPIO_PORTM_AFSEL_R		= 0x00;
 
 
     // 7. Setar os bits de DEN para habilitar I/O digital
+    GPIO_PORTB_AHB_DEN_R    = 0x0C;
     GPIO_PORTD_AHB_DEN_R	= 0x0F;
     GPIO_PORTM_DEN_R		= 0x7F;
 
     // 8. Habilitar resistor de pull-up interno, setar PUR para 1
     GPIO_PORTD_AHB_PUR_R	= 0x0F;
+
+    // 9. Registrador de Dreno Aberto
+    GPIO_PORTB_AHB_ODR_R    = 0x08;
 }
 
 uint32_t PortD_Input(void)
