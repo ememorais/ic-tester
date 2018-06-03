@@ -10,5 +10,6 @@ void I2C_Init(void);
 void I2C_Oled_command(uint8_t command);
 void I2C_Oled_Init(void);
 void I2C_Oled_Draw(uint8_t byte);
+void i2c_check_transmission(void);
 
 #endif // __I2C_H__

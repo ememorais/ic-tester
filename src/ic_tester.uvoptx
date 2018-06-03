@@ -149,9 +149,25 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
+          <LineNumber>68</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>2116</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\i2c.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\exemplo\i2c.c\68</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
           <LineNumber>19</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>2288</Address>
+          <Address>2188</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -161,6 +177,22 @@
           <Filename>.\main.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\exemplo\main.c\19</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>11</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>2160</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\main.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\exemplo\main.c\11</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -172,7 +204,7 @@
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>commands</ItemText>
+          <ItemText>busy,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>
