@@ -58,7 +58,7 @@ void GPIO_Init(void)
 
 
     // 7. Setar os bits de DEN para habilitar I/O digital
-    GPIO_PORTB_AHB_DEN_R    = 0x04;
+    GPIO_PORTB_AHB_DEN_R    = 0x0C;
     GPIO_PORTD_AHB_DEN_R	= 0x0F;
     GPIO_PORTM_DEN_R		= 0x7F;
 
