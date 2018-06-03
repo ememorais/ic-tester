@@ -15,7 +15,8 @@ int main(void)
     Timer_Init();
     I2C_Init();
     I2C_Oled_Init();
-
+    //I2C_Oled_Draw(0xFF);
+    
     while(1)
     {
         
