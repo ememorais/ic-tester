@@ -43,9 +43,9 @@ void GPIO_Init(void)
     GPIO_PORTM_AMSEL_R		= 0x00;
 
     // 4. Limpar PCTL para selecionar o GPIO
+    GPIO_PORTB_AHB_PCTL_R   = 0x2200;
     GPIO_PORTD_AHB_PCTL_R	= 0x00;
     GPIO_PORTM_PCTL_R		= 0x00;
-    GPIO_PORTB_AHB_PCTL_R   = 0x2200;
 
     // 5. DIR para 0 se for entrada, 1 se for saída
     GPIO_PORTD_AHB_DIR_R	= 0x00;
@@ -58,7 +58,7 @@ void GPIO_Init(void)
 
 
     // 7. Setar os bits de DEN para habilitar I/O digital
-    GPIO_PORTB_AHB_DEN_R    = 0x0C;
+    GPIO_PORTB_AHB_DEN_R    = 0x04;
     GPIO_PORTD_AHB_DEN_R	= 0x0F;
     GPIO_PORTM_DEN_R		= 0x7F;
 

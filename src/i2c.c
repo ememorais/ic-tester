@@ -2,8 +2,9 @@
 
 uint32_t error = 0;
 
-#define OLED_ADDRESS 0x3C
-#define OLED_CONTROL_BYTE 0x00
+#define OLED_ADDRESS                0x3C
+#define OLED_CONTROL_COMMAND_BYTE   0x00
+#define OLED_CONTROL_DATA_BYTE      0x40
 
 
 void I2C_Init(void) {
@@ -22,46 +23,43 @@ void I2C_Init(void) {
     I2C0_MTPR_R = 39;
 }
 
-void I2C_Oled_send_command(uint8_t command)
+void I2C_Oled_send_command(uint8_t command_byte)
 {
 
     //--------Transmission of CONTROL byte--------
     
     //Puts address and transmit bit on the Master Slave Address Register
-    I2C0_MSA_R = (oled_address << 1) | 0;
+    I2C0_MSA_R = (OLED_ADDRESS << 1) | 0x00;
 
     //Writes control byte
-    I2C0_MDR_R = oled_control_byte;
+    I2C0_MDR_R = OLED_CONTROL_COMMAND_BYTE;
 
     //Writes ---0-011 to Master Control/Status register
-    I2C0_MCS_R = 0x03;
+    I2C0_MCS_R = (I2C_MCS_START|I2C_MCS_RUN);
 
     //Checks Master Control/Status register BUSY bit
-    while(I2C0_MCS_R & I2C_MCS_BUSY);
+    while((I2C0_MCS_R & I2C_MCS_BUSY) == I2C_MCS_BUSY);
 
-    if(I2C0_MCS_R & I2C_MCS_ERROR) 
-        error++;
+    //--------Transmission of COMMAND byte--------
 
     //Writes command byte
-    I2C0_MDR_R = command;
+    I2C0_MDR_R = command_byte;
     
     //Writes  ---0-101 to Master Control/Status register
-    I2C0_MCS_R = 0x05;
+    I2C0_MCS_R = (I2C_MCS_STOP | I2C_MCS_RUN);
 
     //Checks Master Control/Status register BUSY bit
-    while(I2C0_MCS_R & I2C_MCS_BUSY);
-
-    if(I2C0_MCS_R & I2C_MCS_ERROR) 
-        error++;
+    while((I2C0_MCS_R & I2C_MCS_BUSY) == I2C_MCS_BUSY);
 }
 
-void I2C_Oled_send_data(uint8_t data_byte) {
+void I2C_Oled_send_data(uint8_t data_byte) 
+{
     
     //--------Transmission of CONTROL byte--------
 
     I2C0_MSA_R = (OLED_ADDRESS << 1) | 0x00;
 
-    I2C0_MDR_R = OLED_CONTROL_BYTE;
+    I2C0_MDR_R = OLED_CONTROL_DATA_BYTE;
 
     I2C0_MCS_R = (I2C_MCS_START | I2C_MCS_RUN);
 
@@ -109,7 +107,31 @@ void I2C_Oled_Init(void)
     I2C_Oled_send_command(0xDB); // Set VCOMH Deselect Level
     I2C_Oled_send_command(0x40); // VCOMH Deselect Level
  
-    I2C_Oled_send_command(0xA4); // Set all pixels OFF
+    I2C_Oled_send_command(0xA5); // Set all pixels ON!!!!
     I2C_Oled_send_command(0xA6); // Set display not inverted
     I2C_Oled_send_command(0xAF); // Set display On
+    
+    I2C_Oled_send_command(0xA5); // Set all pixels ON!!!!
+}
+
+void I2C_Oled_Draw(uint8_t byte) 
+{
+    I2C_Oled_send_command(SSD1306_COLUMNADDR);
+    I2C_Oled_send_command(15);
+    I2C_Oled_send_command(30);
+
+    I2C_Oled_send_command(SSD1306_PAGEADDR);
+    I2C_Oled_send_command(3);
+    I2C_Oled_send_command(6);
+
+    I2C_Oled_send_data(byte);
+    I2C_Oled_send_data(byte);
+    I2C_Oled_send_data(byte);
+    I2C_Oled_send_data(byte);
+    I2C_Oled_send_data(byte);
+    I2C_Oled_send_data(byte);
+    I2C_Oled_send_data(byte);
+    I2C_Oled_send_data(byte);
+    I2C_Oled_send_data(byte);
+    I2C_Oled_send_data(byte);
 }
