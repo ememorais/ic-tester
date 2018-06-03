@@ -45,8 +45,11 @@
 #define SSD1306_LCDHEIGHT 16
 #endif
 
+#define SSD1306_BUFFER_SIZE SSD1306_LCDWIDTH * (SSD1306_LCDHEIGHT/8)
+
 //Delay between commands in microseconds
 #define SSD1306_COMMAND_DELAY       200
+#define SSD1306_DATA_DELAY          3
 
 //Bytes to be sent before actual commands or data
 #define SSD1306_COMMAND             0x00

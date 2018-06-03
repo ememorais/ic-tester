@@ -2,9 +2,11 @@
 
 uint32_t error = 0;
 uint32_t busy = 0;
+uint8_t buffer[SSD1306_BUFFER_SIZE];
 
 void I2C_Init(void)
 {
+    memset(buffer, 0x00, SSD1306_BUFFER_SIZE);
 
     //Ativa clock do módulo I2C 0
     SYSCTL_RCGCI2C_R |= SYSCTL_RCGCI2C_R0;
@@ -17,9 +19,9 @@ void I2C_Init(void)
     //Ativa função de master no módulo 0
     I2C0_MCR_R |= I2C_MCR_MFE;
 
-    //2*(TPR+1)*10*12,5ns = 10us -> TPR = 39 (100kbps)
+    //2*(TPR+1)*10*12,5ns = 2,5us -> TPR = 9 (400kbps)
     //I2C0_MTPR_R &= ~I2C_MTPR_TPR_M;
-    I2C0_MTPR_R = 39;
+    I2C0_MTPR_R = 9;
 }
 
 void i2c_check_transmission(void)
@@ -90,8 +92,8 @@ void I2C_Oled_Init(void)
     I2C_Oled_send(SSD1306_COMMAND, 0x8D); // Set Charge Pump
     I2C_Oled_send(SSD1306_COMMAND, 0x14); // Charge Pump (0x10 External, 0x14 Internal DC/DC)
 
-    I2C_Oled_send(OLED_COMMAND, SSD1306_MEMORYMODE);  // 0x20
-    I2C_Oled_send(OLED_COMMAND,0x00);   
+    I2C_Oled_send(SSD1306_COMMAND, SSD1306_MEMORYMODE); // 0x20
+    I2C_Oled_send(SSD1306_COMMAND, 0x01);
 
     I2C_Oled_send(SSD1306_COMMAND, 0xA1); // Set Segment Re-Map
     I2C_Oled_send(SSD1306_COMMAND, 0xC8); // Set Com Output Scan Direction
@@ -113,7 +115,7 @@ void I2C_Oled_Init(void)
     I2C_Oled_send(SSD1306_COMMAND, 0xAF); // Set display On
 }
 
-void I2C_Oled_Draw(uint8_t byte)
+void I2C_Oled_set_address(uint8_t byte)
 {
     I2C_Oled_send(SSD1306_COMMAND, SSD1306_COLUMNADDR);
     I2C_Oled_send(SSD1306_COMMAND, 0);
@@ -122,4 +124,47 @@ void I2C_Oled_Draw(uint8_t byte)
     I2C_Oled_send(SSD1306_COMMAND, SSD1306_PAGEADDR);
     I2C_Oled_send(SSD1306_COMMAND, 0);
     I2C_Oled_send(SSD1306_COMMAND, 7);
+}
+
+void I2C_Oled_Draw_Screen(uint8_t *buffer_pointer)
+{
+
+    I2C_Oled_set_address(0);
+
+    I2C0_MSA_R = (SSD1306_I2C_ADDRESS << 1) | 0x00;
+
+    I2C0_MDR_R = SSD1306_DATA;
+
+    while (I2C0_MCS_R & I2C_MCS_BUSBSY)
+        busy++;
+
+    I2C0_MCS_R = (I2C_MCS_ACK | I2C_MCS_START | I2C_MCS_RUN);
+
+    i2c_check_transmission();
+
+    SysTick_Wait1us(SSD1306_COMMAND_DELAY);
+
+    for (int i = 0; i < SSD1306_BUFFER_SIZE - 1; i++)
+    {
+        I2C0_MDR_R = buffer_pointer[i]; 
+
+        I2C0_MCS_R = (I2C_MCS_ACK | I2C_MCS_RUN);
+
+        SysTick_Wait1us(SSD1306_DATA_DELAY);
+
+        i2c_check_transmission();
+
+    }
+
+    I2C0_MDR_R = buffer_pointer[SSD1306_BUFFER_SIZE - 1];
+
+    I2C0_MCS_R = (I2C_MCS_ACK | I2C_MCS_STOP | I2C_MCS_RUN);
+
+    i2c_check_transmission();
+}
+
+void I2C_Oled_Set_Contrast(uint8_t contrast_level)
+{
+    I2C_Oled_send(SSD1306_COMMAND, SSD1306_SETCONTRAST); 
+    I2C_Oled_send(SSD1306_COMMAND, contrast_level);
 }
