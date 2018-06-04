@@ -7,7 +7,7 @@
 ;Tudo abaixo da diretiva a seguir será armazenado na memória de código
 
 ROW_SIZE EQU 4
-LAST_KEY EQU 0x20000100
+LAST_KEY EQU 0x20002000
 
         AREA    |.text|, CODE, READONLY, ALIGN=2
         THUMB

@@ -42,18 +42,35 @@ int main(void)
         }        
         else if(key == 'D') 
         {
-            for(int i = 0; i < 30; i++)
-            {
-                SysTick_Wait1ms(20);
-                memset(buffer, invert? 0x00 : 0xFF, SSD1306_BUFFER_SIZE);
-                I2C_Oled_Draw_Screen(buffer);
-                invert = !invert;
-            }
+            I2C_Oled_Draw_Screen(buffer);
         }
         else if(key == 0) 
         {
             I2C_Oled_Set_Contrast(contrast);
             contrast += 10;
+        }
+        else if(key == 9) 
+        {
+            if(invert)
+                I2C_Oled_send(SSD1306_COMMAND, SSD1306_INVERTDISPLAY);
+            else
+                I2C_Oled_send(SSD1306_COMMAND, SSD1306_NORMALDISPLAY);
+            invert = !invert;
+        }
+        else if(key == 8) 
+        {
+            memcpy(buffer, ic_clean, SSD1306_BUFFER_SIZE);
+            I2C_Oled_Draw_Screen(((uint8_t*)buffer));
+        }
+        else if(key == 7) 
+        {
+            memcpy(buffer, utfpr_bar, SSD1306_BUFFER_SIZE);
+            I2C_Oled_Draw_Screen(((uint8_t*)buffer));
+        }
+        else if(key == 6) 
+        {
+            memcpy(buffer, ic_and, SSD1306_BUFFER_SIZE);
+            I2C_Oled_Draw_Screen(((uint8_t*)buffer));
         }
         else if(key == 1) 
         {
@@ -63,6 +80,12 @@ int main(void)
         {
             I2C_Oled_Set_Contrast(0xFF);
         }
+        else if (key == '*')
+        {
+                memset(buffer, 0x00, SSD1306_BUFFER_SIZE);
+                I2C_Oled_Draw_Screen(buffer3);
+        }
+        
         
             
     }

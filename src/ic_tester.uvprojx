@@ -445,6 +445,11 @@
               <FileType>1</FileType>
               <FilePath>.\i2c.c</FilePath>
             </File>
+            <File>
+              <FileName>ic_clean.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\images\ic_clean.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

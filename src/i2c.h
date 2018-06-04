@@ -8,7 +8,7 @@
 #include <string.h>
 
 extern uint8_t buffer[SSD1306_BUFFER_SIZE];
-extern uint8_t buffer2[SSD1306_BUFFER_SIZE];
+extern uint8_t buffer3[SSD1306_BUFFER_SIZE];
 
 void I2C_Init(void);
 void I2C_Oled_send(uint8_t type, uint8_t command);
