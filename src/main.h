@@ -9,4 +9,5 @@
 #include "../images/ic_clean.h"
 #include "../images/ic_and.h"
 #include "../images/utfpr_bar.h"
+#include "../images/FreeSans9pt7b.h"
 

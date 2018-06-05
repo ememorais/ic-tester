@@ -72,6 +72,11 @@ int main(void)
             memcpy(buffer, ic_and, SSD1306_BUFFER_SIZE);
             I2C_Oled_Draw_Screen(((uint8_t*)buffer));
         }
+        else if(key == 5) 
+        {
+            memcpy(buffer, FreeSans9pt7bBitmaps, SSD1306_BUFFER_SIZE);
+            I2C_Oled_Draw_Screen(((uint8_t*)buffer));
+        }
         else if(key == 1) 
         {
             I2C_Oled_Set_Contrast(0x00);

@@ -214,7 +214,7 @@ void I2C_Oled_Draw_Screen(uint8_t *buffer_pointer)
 
         I2C0_MCS_R = (I2C_MCS_ACK | I2C_MCS_RUN);
 
-        SysTick_Wait1us(SSD1306_DATA_DELAY);
+        //SysTick_Wait1us(SSD1306_DATA_DELAY);
         //SysTick_Wait1ms(2);             //DEBUG
 
         i2c_check_transmission();
