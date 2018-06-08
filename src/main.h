@@ -10,4 +10,5 @@
 #include "../images/ic_and.h"
 #include "../images/utfpr_bar.h"
 #include "../images/FreeSans9pt7b.h"
+#include "../fonts/custom_font.h"
 

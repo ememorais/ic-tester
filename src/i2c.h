@@ -13,7 +13,7 @@ extern uint8_t buffer3[SSD1306_BUFFER_SIZE];
 void I2C_Init(void);
 void I2C_Oled_send(uint8_t type, uint8_t command);
 void I2C_Oled_Init(void);
-void I2C_Oled_Draw_Screen(uint8_t* buffer_pointer);
+void I2C_Oled_Draw_Screen(uint8_t* buffer_pointer, uint32_t buffer_size);
 void I2C_Oled_Set_Contrast(uint8_t contrast_level);
 
 #endif // __I2C_H__

@@ -180,6 +180,7 @@ void I2C_Oled_Init(void)
 }
 
 void I2C_Oled_set_address(uint8_t byte)
+//TODO: RENAME!!
 {
     I2C_Oled_send(SSD1306_COMMAND, SSD1306_COLUMNADDR);
     I2C_Oled_send(SSD1306_COMMAND, 0);
@@ -190,10 +191,10 @@ void I2C_Oled_set_address(uint8_t byte)
     I2C_Oled_send(SSD1306_COMMAND, 7);
 }
 
-void I2C_Oled_Draw_Screen(uint8_t *buffer_pointer)
+void I2C_Oled_Draw_Screen(uint8_t *buffer_pointer, uint32_t buffer_size)
 {
 
-    I2C_Oled_set_address(0);
+    //I2C_Oled_set_address(0);
 
     I2C0_MSA_R = (SSD1306_I2C_ADDRESS << 1) | 0x00;
 
@@ -208,20 +209,20 @@ void I2C_Oled_Draw_Screen(uint8_t *buffer_pointer)
 
     SysTick_Wait1us(SSD1306_COMMAND_DELAY);
 
-    for (int i = 0; i < SSD1306_BUFFER_SIZE - 1; i++)
+    for (int i = 0; i < buffer_size - 1; i++)
     {
         I2C0_MDR_R = buffer_pointer[i]; 
 
         I2C0_MCS_R = (I2C_MCS_ACK | I2C_MCS_RUN);
 
-        //SysTick_Wait1us(SSD1306_DATA_DELAY);
+        SysTick_Wait1us(SSD1306_DATA_DELAY);
         //SysTick_Wait1ms(2);             //DEBUG
 
         i2c_check_transmission();
 
     }
 
-    I2C0_MDR_R = buffer_pointer[SSD1306_BUFFER_SIZE - 1];
+    I2C0_MDR_R = buffer_pointer[buffer_size - 1];
 
     I2C0_MCS_R = (I2C_MCS_ACK | I2C_MCS_STOP | I2C_MCS_RUN);
 
@@ -232,5 +233,17 @@ void I2C_Oled_Set_Contrast(uint8_t contrast_level)
 {
     I2C_Oled_send(SSD1306_COMMAND, SSD1306_SETCONTRAST); 
     I2C_Oled_send(SSD1306_COMMAND, contrast_level);
+}
+
+void I2C_Oled_Move(uint8_t row, uint8_t col) {
+	if(col > 127) { col = 127; }
+	if(row > 7) { row = 7; }
+	
+	I2C_Oled_send(SSD1306_COMMAND, 0x21);     // set column
+	I2C_Oled_send(SSD1306_COMMAND, col);      // start = col
+	I2C_Oled_send(SSD1306_COMMAND, 0x7F);     // end = col max
+	I2C_Oled_send(SSD1306_COMMAND, 0x22);     // set row
+	I2C_Oled_send(SSD1306_COMMAND, row);      // start = row
+	I2C_Oled_send(SSD1306_COMMAND, 0x07);     // end = row max
 }
 

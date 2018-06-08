@@ -36,13 +36,13 @@ int main(void)
             for(int i = 0; i < 30; i++)
             {
                 memset(buffer, invert? 0xFF : 0x00, SSD1306_BUFFER_SIZE);
-                I2C_Oled_Draw_Screen(buffer);
+                I2C_Oled_Draw_Screen(buffer, 1024);
                 invert = !invert;
             }
         }        
         else if(key == 'D') 
         {
-            I2C_Oled_Draw_Screen(buffer);
+            I2C_Oled_Draw_Screen(buffer,1024);
         }
         else if(key == 0) 
         {
@@ -60,22 +60,21 @@ int main(void)
         else if(key == 8) 
         {
             memcpy(buffer, ic_clean, SSD1306_BUFFER_SIZE);
-            I2C_Oled_Draw_Screen(((uint8_t*)buffer));
+            I2C_Oled_Draw_Screen(((uint8_t*)buffer), SSD1306_BUFFER_SIZE);
         }
         else if(key == 7) 
         {
-            memcpy(buffer, utfpr_bar, SSD1306_BUFFER_SIZE);
-            I2C_Oled_Draw_Screen(((uint8_t*)buffer));
+            memcpy(buffer, utfpr_bar, 512);
+            I2C_Oled_Draw_Screen(((uint8_t*)buffer), 512);
         }
         else if(key == 6) 
         {
             memcpy(buffer, ic_and, SSD1306_BUFFER_SIZE);
-            I2C_Oled_Draw_Screen(((uint8_t*)buffer));
+            I2C_Oled_Draw_Screen(((uint8_t*)buffer), SSD1306_BUFFER_SIZE);
         }
         else if(key == 5) 
         {
-            memcpy(buffer, FreeSans9pt7bBitmaps, SSD1306_BUFFER_SIZE);
-            I2C_Oled_Draw_Screen(((uint8_t*)buffer));
+            I2C_Oled_Draw_Screen(((uint8_t*)font_A), 8);
         }
         else if(key == 1) 
         {
@@ -88,7 +87,7 @@ int main(void)
         else if (key == '*')
         {
                 memset(buffer, 0x00, SSD1306_BUFFER_SIZE);
-                I2C_Oled_Draw_Screen(buffer3);
+                I2C_Oled_Draw_Screen(buffer,1024);
         }
         
         
