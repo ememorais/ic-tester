@@ -7,13 +7,16 @@
 #include "utils.h"
 #include <string.h>
 
-extern uint8_t buffer[SSD1306_BUFFER_SIZE];
-extern uint8_t buffer3[SSD1306_BUFFER_SIZE];
+
 
 void I2C_Init(void);
-void I2C_Oled_send(uint8_t type, uint8_t command);
-void I2C_Oled_Init(void);
-void I2C_Oled_Draw_Screen(uint8_t* buffer_pointer, uint32_t buffer_size);
-void I2C_Oled_Set_Contrast(uint8_t contrast_level);
+void I2C_OLED_Send(uint8_t type, uint8_t command);
+void I2C_OLED_Init(void);
+void I2C_OLED_Draw(const uint8_t*, uint32_t);
+void I2C_OLED_Print(char *string);
+void I2C_OLED_Move_Cursor(uint8_t row, uint8_t column);
+void I2C_OLED_Set_Contrast(uint8_t contrast_level);
+void I2C_OLED_Clear(void);
+void I2C_OLED_Sequence_Init(void);
 
 #endif // __I2C_H__

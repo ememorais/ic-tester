@@ -149,9 +149,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>196</LineNumber>
+          <LineNumber>136</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>2270</Address>
+          <Address>2366</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -160,7 +160,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\i2c.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\exemplo\i2c.c\196</Expression>
+          <Expression>\\exemplo\i2c.c\136</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -178,6 +178,26 @@
           <count>2</count>
           <WinNumber>1</WinNumber>
           <ItemText>i</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>string</ItemText>
+        </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>*string</ItemText>
+        </Ww>
+        <Ww>
+          <count>5</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>*string*8</ItemText>
+        </Ww>
+        <Ww>
+          <count>6</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>font_default</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>
@@ -395,7 +415,7 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>13</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>.\i2c.c</PathWithFileName>
