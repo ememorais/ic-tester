@@ -2,8 +2,15 @@
 
 #include "../images/74LS00.h"
 #include "../images/74LS08.h"
+#include "../images/loading_empty.h"
 
 char selected_ic[4] = {'`', '`', '`', '\0'};
+
+uint8_t testing_state = 0;
+uint8_t testing_progression = 0;
+
+uint8_t testing_active = 0;
+uint8_t testing_progression_current = 0;
 
 enum Tester_State
 {
@@ -23,11 +30,19 @@ void IC_Tester_Run(void)
     {
     case INIT:
         IC_Tester_Init();
+        break;
     case POLLING:
         IC_Tester_Poll();
         break;
     case SELECTING:
         IC_Tester_Select();
+        break;
+    case TESTING:
+        IC_Tester_Test();
+        break;
+    case RESULTS:
+        IC_Tester_Results();
+        break;
     default:
         break;
     }
@@ -37,11 +52,11 @@ void IC_Tester_Init(void)
 {
     current_digit = 0;
     strcpy(selected_ic, "```");
-    
+
     I2C_OLED_Clear();
-    I2C_OLED_Move_Cursor(0,0);
+    I2C_OLED_Move_Cursor(0, 0);
     I2C_OLED_Print(" Selecione o CI:");
-    I2C_OLED_Move_Cursor(3,36);
+    I2C_OLED_Move_Cursor(3, 36);
     I2C_OLED_Print("74LS");
     I2C_OLED_Print(selected_ic);
 
@@ -96,8 +111,9 @@ void IC_Tester_Select(void)
         I2C_OLED_Print("74LS00");
         I2C_OLED_Move_Cursor(1, center_string_position("encontrado"));
         I2C_OLED_Print("encontrado");
-        I2C_OLED_Move_Cursor(2,0);
+        I2C_OLED_Move_Cursor(2, 0);
         I2C_OLED_Draw(BMP_74LS00, 768);
+        SysTick_Wait1ms(2000);
         tester_state = TESTING;
     }
     else if (strcmp(selected_ic, "08`") == 0)
@@ -106,8 +122,9 @@ void IC_Tester_Select(void)
         I2C_OLED_Print("74LS08");
         I2C_OLED_Move_Cursor(1, center_string_position("encontrado"));
         I2C_OLED_Print("encontrado");
-        I2C_OLED_Move_Cursor(2,0);
+        I2C_OLED_Move_Cursor(2, 0);
         I2C_OLED_Draw(BMP_74LS08, 768);
+        SysTick_Wait1ms(2000);
         tester_state = TESTING;
     }
     else
@@ -121,3 +138,39 @@ void IC_Tester_Select(void)
     }
 }
 
+void IC_Tester_Test(void)
+{
+    if (!testing_active)
+    {
+        I2C_OLED_Move_Cursor(1, 0);
+        I2C_OLED_Draw(loading_empty, 128);
+        I2C_OLED_Move_Cursor(1, 0);
+        testing_active = 1;
+    }
+    else
+    {
+        if (testing_progression > testing_progression_current)
+        {
+            I2C_OLED_Draw(loading_full, 1);
+            testing_progression_current++;
+            if (testing_progression > 127)
+            {
+                testing_active = 0;
+                testing_progression = 0;
+                tester_state = RESULTS;
+            }
+        }
+    }
+}
+
+void IC_Tester_Results(void)
+{
+        I2C_OLED_Move_Cursor(3,0);
+        I2C_OLED_Print("                ");
+        I2C_OLED_Print("Nenhum problema ");
+        I2C_OLED_Print("   detectado    ");
+        I2C_OLED_Print("                ");
+        SysTick_Wait1ms(5000);
+        tester_state = INIT;
+
+}

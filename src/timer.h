@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include "tm4c1294ncpdt.h"
 #include "globals.h"
+#include "ic_tester.h"
 
 void Timer_Init(void);
 
