@@ -450,6 +450,11 @@
               <FileType>5</FileType>
               <FilePath>..\images\ic_clean.h</FilePath>
             </File>
+            <File>
+              <FileName>ic_tester.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ic_tester.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

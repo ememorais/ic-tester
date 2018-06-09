@@ -6,6 +6,7 @@
 #include "ssd1306.h"
 #include "utils.h"
 #include <string.h>
+#include "ic_tester.h"
 
 
 
@@ -18,5 +19,9 @@ void I2C_OLED_Move_Cursor(uint8_t row, uint8_t column);
 void I2C_OLED_Set_Contrast(uint8_t contrast_level);
 void I2C_OLED_Clear(void);
 void I2C_OLED_Sequence_Init(void);
+void IC_Tester_Select(void);
+uint8_t center_string_position(char* string);
+
+extern uint8_t update_digit;
 
 #endif // __I2C_H__

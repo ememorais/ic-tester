@@ -7,6 +7,8 @@
 uint32_t error = 0;
 uint32_t busy = 0;
 
+extern uint8_t update_digit = 0;
+
 void I2C_Init(void)
 {
     //Ativa clock do módulo I2C 0
@@ -224,11 +226,10 @@ void I2C_OLED_Sequence_Init(void)
     I2C_OLED_Draw(((uint8_t *)font_default), 1024);
     SysTick_Wait1ms(2000);
     I2C_OLED_Clear();
-    I2C_OLED_Move_Cursor(0,0);
-    //I2C_OLED_Draw(((uint8_t *)ic_and), 1024);
-    I2C_OLED_Move_Cursor(0,0);
-    I2C_OLED_Print(" Selecione o CI:");
-    I2C_OLED_Move_Cursor(3,46);
-    I2C_OLED_Print("74LS``");
+}
 
+uint8_t center_string_position(char* string)
+{
+    //WIDTH - 8 * (length / 2)
+    return 64 - strlen(string) * 4;
 }

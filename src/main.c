@@ -20,8 +20,10 @@ int main(void)
     I2C_OLED_Init();
     I2C_OLED_Sequence_Init();
 
+
     while (1)
     {
+        IC_Tester_Run();
     //     uint8_t key = Keyboard_Poll();
     //     if (key == 'A')
     //     {

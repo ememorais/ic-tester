@@ -3,8 +3,8 @@
 ;Marcelo Fernandes e Bruno Colombo
 
 
-;------------Área de Código------------
-;Tudo abaixo da diretiva a seguir será armazenado na memória de código
+;------------ï¿½rea de Cï¿½digo------------
+;Tudo abaixo da diretiva a seguir serï¿½ armazenado na memï¿½ria de cï¿½digo
 
 ROW_SIZE EQU 4
 LAST_KEY EQU 0x20002000
@@ -22,10 +22,10 @@ LAST_KEY EQU 0x20002000
             
         EXPORT LAST_KEY
                 
-keyboardArray = 1, 2, 3, 'A',\
-                4, 5, 6, 'B',\
-                7, 8, 9, 'C',\
-                '*', 0, '#', 'D'
+keyboardArray = '1', '2', '3', 'A',\
+                '4', '5', '6', 'B',\
+                '7', '8', '9', 'C',\
+                '*', '0', '#', 'D'
                 
               
 
@@ -43,19 +43,19 @@ Keyboard_Init
 
 ;------------Keyboard_Poll------------
 ; Checa se alguma tecla foi pressionada.
-; Parâmetro de entrada: 
-; Parâmetro de saída: R0 --> Identificador da tecla pressionada 
-;                            (0xFF se não houve pressionamento)
+; Parï¿½metro de entrada: 
+; Parï¿½metro de saï¿½da: R0 --> Identificador da tecla pressionada 
+;                            (0xFF se nï¿½o houve pressionamento)
 Keyboard_Poll
     PUSH    {R1, R2, R3, R4, R5, R7, R8, LR}
     MOV     R5, #0                  ;Coloca o iterador de colunas em 0
-    LDR     R1, =columnArray        ;Coloca o endereço do column array em R1
+    LDR     R1, =columnArray        ;Coloca o endereï¿½o do column array em R1
     MOV     R7, #ROW_SIZE           ;Coloca o tamanho da linha do teclado em R4
-    MOV     R8, #0                  ;Zera a flag de detecção
+    MOV     R8, #0                  ;Zera a flag de detecï¿½ï¿½o
     
 keyboard_poll_loop
-    LDR     R1, =columnArray        ;Coloca o endereço do vetor de colunas em R1
-    ADD     R1, R5                  ;Avança o endereço original até o offset calculado
+    LDR     R1, =columnArray        ;Coloca o endereï¿½o do vetor de colunas em R1
+    ADD     R1, R5                  ;Avanï¿½a o endereï¿½o original atï¿½ o offset calculado
     LDRB    R0, [R1]                ;Pega o byte correspondente do vetor
     BL      PortM_OutputKeyboard    ;Escreve na porta para ativar a coluna escolhida
     
@@ -70,9 +70,9 @@ keyboard_poll_loop
     MOV     R8, #1                  ;Seta flag que detectou um pressionamento
     BL      Convert_BitsToDecimal   ;Converte o valor lido nas portas para um decimal
     SUB     R0, #1                  ;Converte em zero-indexed
-    MUL     R0, R0, R7              ;Avança linhas
-    ADD     R0, R5                  ;Avança colunas
-    B       keyboard_getChar        ;Para detecção se algo foi detectado
+    MUL     R0, R0, R7              ;Avanï¿½a linhas
+    ADD     R0, R5                  ;Avanï¿½a colunas
+    B       keyboard_getChar        ;Para detecï¿½ï¿½o se algo foi detectado
     
 keyboard_undetected
     ADD     R5, #1                  ;colunas++
@@ -93,8 +93,8 @@ keyboard_poll_exit
     POP     {R1, R2, R3, R4, R5, R7, R8, LR}
     BX      LR
 keyboard_getChar
-    LDR     R1, =keyboardArray          ;Endereço do vetor de caracteres do teclado          
-    ADD     R1, R0                      ;Coloca o valor calculado como offset de bytes no endereço
+    LDR     R1, =keyboardArray          ;Endereï¿½o do vetor de caracteres do teclado          
+    ADD     R1, R0                      ;Coloca o valor calculado como offset de bytes no endereï¿½o
     LDRB    R0, [R1]                    ;Coloca o byte escolhido em R0
     LDR     R1, =LAST_KEY               ;ONRELEASE: guarda o valor lido em LAST_KEY e retorna 0xFF
     STR     R0, [R1]
