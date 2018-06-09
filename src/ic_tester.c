@@ -156,7 +156,7 @@ void IC_Tester_Test(void)
             if (testing_progression > 127)
             {
                 testing_active = 0;
-                testing_progression = 0;
+                testing_progression = testing_progression_current = 0;
                 tester_state = RESULTS;
             }
         }
