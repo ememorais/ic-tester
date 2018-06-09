@@ -223,7 +223,7 @@ void I2C_OLED_Clear()
 void I2C_OLED_Sequence_Init(void)
 {
     I2C_OLED_Move_Cursor(0,0);
-    I2C_OLED_Draw(((uint8_t *)font_default), 1024);
+    I2C_OLED_Draw(((uint8_t *)utfpr_bar), 1024);
     SysTick_Wait1ms(2000);
     I2C_OLED_Clear();
 }
