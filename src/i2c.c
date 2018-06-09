@@ -132,13 +132,13 @@ void I2C_OLED_Print(char* string)
 
     while (*string != '\0')
     {
-        uint8_t c = *string;
-        if(c > 'A' && c < 'Z') { }               // upper-case ascii range
-        else if(c > 'a' && c < 'z') { c -= 96; } // lower-case ascii range
-        else if(c > 31 && c < 64) { }            // numbers and symbols
-        else if(c < 32) { c += 96; }             // low ascii
+//        uint8_t c = *string;
+//        if(c > 'A' && c < 'Z') { }               // upper-case ascii range
+//        else if(c > 'a' && c < 'z') { c -= 96; } // lower-case ascii range
+//        else if(c > 31 && c < 64) { }            // numbers and symbols
+//        else if(c < 32) { c += 96; }             // low ascii
 
-        I2C_OLED_Draw(font_default+(c*8),8);
+        I2C_OLED_Draw(font_default+(*string*8),8);
         string++;
         //I2C_OLED_Draw(((uint8_t*)font_default[8 * (*string)]), 8);
     }
@@ -221,14 +221,14 @@ void I2C_OLED_Clear()
 void I2C_OLED_Sequence_Init(void)
 {
     I2C_OLED_Move_Cursor(0,0);
-    I2C_OLED_Draw(((uint8_t *)utfpr_bar), 1024);
+    I2C_OLED_Draw(((uint8_t *)font_default), 1024);
     SysTick_Wait1ms(2000);
+    I2C_OLED_Clear();
     I2C_OLED_Move_Cursor(0,0);
-    I2C_OLED_Draw(((uint8_t *)ic_and), 1024);
-    //SysTick_Wait1ms(500);
+    //I2C_OLED_Draw(((uint8_t *)ic_and), 1024);
     I2C_OLED_Move_Cursor(0,0);
-    I2C_OLED_Print("Digite o CI:");
-    I2C_OLED_Move_Cursor(1,80);
-    I2C_OLED_Print("74LS__");
+    I2C_OLED_Print(" Selecione o CI:");
+    I2C_OLED_Move_Cursor(3,46);
+    I2C_OLED_Print("74LS``");
 
 }

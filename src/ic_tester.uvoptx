@@ -149,9 +149,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>136</LineNumber>
+          <LineNumber>141</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>2366</Address>
+          <Address>2246</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -160,7 +160,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\i2c.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\exemplo\i2c.c\136</Expression>
+          <Expression>\\exemplo\i2c.c\141</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -187,12 +187,12 @@
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>*string</ItemText>
+          <ItemText>*string,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>*string*8</ItemText>
+          <ItemText>*string*8,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
