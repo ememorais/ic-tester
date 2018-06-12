@@ -311,7 +311,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>4</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -381,6 +381,11 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
+              <FileName>font_default.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fonts\font_default.c</FilePath>
+            </File>
+            <File>
               <FileName>startup.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\startup.s</FilePath>
@@ -446,14 +451,34 @@
               <FilePath>.\i2c.c</FilePath>
             </File>
             <File>
-              <FileName>ic_clean.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\images\ic_clean.h</FilePath>
-            </File>
-            <File>
               <FileName>ic_tester.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ic_tester.c</FilePath>
+            </File>
+            <File>
+              <FileName>74LS32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\images\74LS32.c</FilePath>
+            </File>
+            <File>
+              <FileName>74LS00.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\images\74LS00.c</FilePath>
+            </File>
+            <File>
+              <FileName>74LS08.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\images\74LS08.c</FilePath>
+            </File>
+            <File>
+              <FileName>utfpr_bar.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\images\utfpr_bar.c</FilePath>
+            </File>
+            <File>
+              <FileName>loading_empty.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\images\loading_empty.c</FilePath>
             </File>
           </Files>
         </Group>

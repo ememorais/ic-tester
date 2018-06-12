@@ -2,6 +2,7 @@
 #define __IC_TESTER_H__
 
 #include <stdint.h>
+#include "../images/images.h"
 #include "keyboard.h"
 #include "i2c.h"
 

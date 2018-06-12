@@ -1,8 +1,5 @@
 #include "ic_tester.h"
 
-#include "../images/74LS00.h"
-#include "../images/74LS08.h"
-#include "../images/loading_empty.h"
 
 char selected_ic[4] = {'`', '`', '`', '\0'};
 
@@ -143,7 +140,7 @@ void IC_Tester_Test(void)
     if (!testing_active)
     {
         I2C_OLED_Move_Cursor(1, 0);
-        I2C_OLED_Draw(loading_empty, 128);
+        I2C_OLED_Draw(BMP_LOADING_EMPTY, 128);
         I2C_OLED_Move_Cursor(1, 0);
         testing_active = 1;
     }
@@ -151,7 +148,7 @@ void IC_Tester_Test(void)
     {
         if (testing_progression > testing_progression_current)
         {
-            I2C_OLED_Draw(loading_full, 1);
+            I2C_OLED_Draw(BMP_LOADING_FULL, 1);
             testing_progression_current++;
             if (testing_progression > 127)
             {
