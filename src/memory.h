@@ -1,0 +1,4 @@
+// memory.h
+// Marcelo Fernandes e Bruno Colombo
+
+const char memory[] = {"N74LS08_P110110V110110_T0000001000000_T1001001100100_T0100101010010_T1111111111111_N_"};

@@ -133,12 +133,12 @@
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
-            <Capability>0</Capability>
-            <DriverSelection>-1</DriverSelection>
+            <Capability>1</Capability>
+            <DriverSelection>4096</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -311,7 +311,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>4</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -381,11 +381,6 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>font_default.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\fonts\font_default.c</FilePath>
-            </File>
-            <File>
               <FileName>startup.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\startup.s</FilePath>
@@ -446,39 +441,19 @@
               <FilePath>.\gpio.h</FilePath>
             </File>
             <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\i2c.c</FilePath>
+              <FileName>memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\memory.h</FilePath>
             </File>
             <File>
-              <FileName>ic_tester.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\ic_tester.c</FilePath>
+              <FileName>test.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\test.h</FilePath>
             </File>
             <File>
-              <FileName>74LS32.c</FileName>
+              <FileName>test.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\images\74LS32.c</FilePath>
-            </File>
-            <File>
-              <FileName>74LS00.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\images\74LS00.c</FilePath>
-            </File>
-            <File>
-              <FileName>74LS08.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\images\74LS08.c</FilePath>
-            </File>
-            <File>
-              <FileName>utfpr_bar.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\images\utfpr_bar.c</FilePath>
-            </File>
-            <File>
-              <FileName>loading_empty.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\images\loading_empty.c</FilePath>
+              <FilePath>.\test.c</FilePath>
             </File>
           </Files>
         </Group>

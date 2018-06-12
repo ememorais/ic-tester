@@ -1,14 +1,13 @@
 #if !defined(__I2C_H__)
 #define __I2C_H__
 
-#include "../images/images.h"
-#include "../fonts/fonts.h"
 #include <stdint.h>
 #include "tm4c1294ncpdt.h"
 #include "ssd1306.h"
 #include "utils.h"
 #include <string.h>
 #include "ic_tester.h"
+
 
 
 void I2C_Init(void);

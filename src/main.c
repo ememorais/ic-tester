@@ -6,23 +6,20 @@
 
 #include "main.h"
 
-char invert = 0;
-
 int main(void)
 {
-    //int contrast = 0;
     PLL_Init();
     SysTick_Init();
     GPIO_Init();
     Keyboard_Init();
     Timer_Init();
-    I2C_Init();
-    I2C_OLED_Init();
-    I2C_OLED_Sequence_Init();
-
-
-    while (1)
-    {
-        IC_Tester_Run();
-    }
+	
+		char ic_code[]="74LS08";
+		int resultado,pos = Verify_mem(ic_code);
+		
+		if(pos>-1){
+			resultado = GPIO_config(pos);
+		}
+		
+		return 0;
 }

@@ -1,8 +1,5 @@
 #include "timer.h"
 
-
-uint32_t testing_counter = 0;
-
 // -----------------------------------------------------------------------------
 // FunÃ§Ã£o Timer_Init
 //--------------------------------
@@ -37,19 +34,11 @@ void Timer_Init(void)
 }
 
 // -----------------------------------------------------------------------------
-// Funï¿½ï¿½o Timer0A_Handler
+// Função Timer0A_Handler
 //--------------------------------
-// Interrupï¿½ï¿½o gerada pelo Timer 0
+// Interrupção gerada pelo Timer 0
 // -----------------------------------------------------------------------------
 void Timer0A_Handler(void)
 {
 		TIMER0_ICR_R |= 0x01;
-
-        if(testing_active && ++testing_counter >= 25)
-        {
-            testing_progression++;
-            testing_counter = 0;
-        }
-
-
 }
