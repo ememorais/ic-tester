@@ -1,6 +1,5 @@
 #include "ic_tester.h"
 
-
 char selected_ic[4] = {'`', '`', '`', '\0'};
 
 uint8_t testing_state = 0;
@@ -126,13 +125,36 @@ void IC_Tester_Select(void)
     }
     else
     {
-        I2C_OLED_Move_Cursor(0, center_string_position("CI não"));
-        I2C_OLED_Print("CI nao");
-        I2C_OLED_Move_Cursor(1, center_string_position("encontrado"));
-        I2C_OLED_Print("encontrado");
-        SysTick_Wait1ms(2000);
-        tester_state = INIT;
+        if (IC_Tester_Available())
+        {
+            char name[10];
+            strcpy(name, "74LS"); 
+            strcat(name, selected_ic);
+            if(name[6] == '`') name[6] = ' ';
+            I2C_OLED_Move_Cursor(0, center_string_position("74LS08"));
+            I2C_OLED_Print(name);
+            I2C_OLED_Move_Cursor(1, center_string_position("encontrado"));
+            I2C_OLED_Print("encontrado");
+            I2C_OLED_Move_Cursor(2, 0);
+            I2C_OLED_Draw(BMP_74LSXX, 768);
+            SysTick_Wait1ms(2000);
+            tester_state = TESTING;
+        }
+        else
+        {
+            I2C_OLED_Move_Cursor(0, center_string_position("CI não"));
+            I2C_OLED_Print("CI nao");
+            I2C_OLED_Move_Cursor(1, center_string_position("encontrado"));
+            I2C_OLED_Print("encontrado");
+            SysTick_Wait1ms(2000);
+            tester_state = INIT;
+        }
     }
+}
+
+uint8_t IC_Tester_Available(void)
+{
+    return 1;
 }
 
 void IC_Tester_Test(void)
@@ -162,12 +184,11 @@ void IC_Tester_Test(void)
 
 void IC_Tester_Results(void)
 {
-        I2C_OLED_Move_Cursor(3,0);
-        I2C_OLED_Print("                ");
-        I2C_OLED_Print("Nenhum problema ");
-        I2C_OLED_Print("   detectado    ");
-        I2C_OLED_Print("                ");
-        SysTick_Wait1ms(5000);
-        tester_state = INIT;
-
+    I2C_OLED_Move_Cursor(3, 0);
+    I2C_OLED_Print("                ");
+    I2C_OLED_Print("Nenhum problema ");
+    I2C_OLED_Print("   detectado    ");
+    I2C_OLED_Print("                ");
+    SysTick_Wait1ms(5000);
+    tester_state = INIT;
 }

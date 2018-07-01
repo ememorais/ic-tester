@@ -480,6 +480,11 @@
               <FileType>1</FileType>
               <FilePath>..\images\loading_empty.c</FilePath>
             </File>
+            <File>
+              <FileName>74LSXX.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\images\74LSXX.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

@@ -17,5 +17,5 @@ void IC_Tester_Poll(void);
 void IC_Tester_Init(void);
 void IC_Tester_Test(void);
 void IC_Tester_Results(void);
-
+uint8_t IC_Tester_Available(void);
 #endif

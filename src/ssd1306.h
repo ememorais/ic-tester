@@ -49,7 +49,7 @@
 
 //Delay between commands in microseconds
 #define SSD1306_COMMAND_DELAY       200
-#define SSD1306_DATA_DELAY          3
+#define SSD1306_DATA_DELAY          80
 
 //Bytes to be sent before actual commands or data
 #define SSD1306_COMMAND             0x00

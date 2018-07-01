@@ -157,7 +157,6 @@ void I2C_OLED_Draw(const uint8_t *data_pointer, uint32_t data_size)
         I2C0_MCS_R = (I2C_MCS_ACK | I2C_MCS_RUN);
 
         SysTick_Wait1us(SSD1306_DATA_DELAY);
-
         I2C_Check_Transmission();
     }
 
