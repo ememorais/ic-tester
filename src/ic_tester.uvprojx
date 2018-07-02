@@ -485,6 +485,11 @@
               <FileType>1</FileType>
               <FilePath>..\images\74LSXX.c</FilePath>
             </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\test.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

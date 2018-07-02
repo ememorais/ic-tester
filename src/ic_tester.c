@@ -9,6 +9,8 @@ uint8_t testing_active = 0;
 uint8_t testing_progression_current = 0;
 
 uint8_t test_result = 0;
+char test_name[7] = "74LS";
+int32_t test_position = 0;
 
 enum Tester_State
 {
@@ -100,76 +102,59 @@ void IC_Tester_Poll(void)
     }
 }
 
+const unsigned char *select_bitmap(char *name)
+{
+    if (strcmp(name, "74LS00`"))
+        return BMP_74LS00;
+    else if (strcmp(name, "74LS08`"))
+        return BMP_74LS08;
+    else
+        return BMP_74LSXX;
+}
+
 void IC_Tester_Select(void)
 {
+    strcpy(test_name, "74LS");
+    strcat(test_name, selected_ic);
+    test_position = Verify_mem(test_name);
     I2C_OLED_Clear();
-    if (strcmp(selected_ic, "00`") == 0)
+
+    if (test_position > -1)
     {
-        I2C_OLED_Move_Cursor(0, center_string_position("74LS00"));
-        I2C_OLED_Print("74LS00");
-        I2C_OLED_Move_Cursor(1, center_string_position("encontrado"));
-        I2C_OLED_Print("encontrado");
-        I2C_OLED_Move_Cursor(2, 0);
-        I2C_OLED_Draw(BMP_74LS00, 768);
-        SysTick_Wait1ms(2000);
-        tester_state = TESTING;
-    }
-    else if (strcmp(selected_ic, "08`") == 0)
-    {
+        char name[10];
+        strcpy(name, "74LS");
+        strcat(name, selected_ic);
+        if (name[6] == '`')
+            name[6] = ' ';
         I2C_OLED_Move_Cursor(0, center_string_position("74LS08"));
-        I2C_OLED_Print("74LS08");
+        I2C_OLED_Print(name);
         I2C_OLED_Move_Cursor(1, center_string_position("encontrado"));
         I2C_OLED_Print("encontrado");
         I2C_OLED_Move_Cursor(2, 0);
-        I2C_OLED_Draw(BMP_74LS08, 768);
+
+        I2C_OLED_Draw(select_bitmap(test_name), 768);
         SysTick_Wait1ms(2000);
         tester_state = TESTING;
     }
     else
     {
-        if (IC_Tester_Available())
-        {
-            char name[10];
-            strcpy(name, "74LS");
-            strcat(name, selected_ic);
-            if (name[6] == '`')
-                name[6] = ' ';
-            I2C_OLED_Move_Cursor(0, center_string_position("74LS08"));
-            I2C_OLED_Print(name);
-            I2C_OLED_Move_Cursor(1, center_string_position("encontrado"));
-            I2C_OLED_Print("encontrado");
-            I2C_OLED_Move_Cursor(2, 0);
-            I2C_OLED_Draw(BMP_74LSXX, 768);
-            SysTick_Wait1ms(2000);
-            tester_state = TESTING;
-        }
-        else
-        {
-            I2C_OLED_Move_Cursor(0, center_string_position("CI não"));
-            I2C_OLED_Print("CI nao");
-            I2C_OLED_Move_Cursor(1, center_string_position("encontrado"));
-            I2C_OLED_Print("encontrado");
-            SysTick_Wait1ms(2000);
-            tester_state = INIT;
-        }
+        I2C_OLED_Move_Cursor(0, center_string_position("CI não"));
+        I2C_OLED_Print("CI nao");
+        I2C_OLED_Move_Cursor(1, center_string_position("encontrado"));
+        I2C_OLED_Print("encontrado");
+        SysTick_Wait1ms(2000);
+        tester_state = INIT;
     }
-}
-
-uint8_t IC_Tester_Available(void)
-{
-    //!!MUDAR!! chama função que verifica vetor e vê se valor existe
-    //          só precisa dizer se existe ou não (1 ou 0)
-    return 1;
 }
 
 void IC_Tester_Test(void)
 {
-    test_result = 0x20; // !!MUDAR!! chama função que faz o teste aqui
     if (!testing_active)
     {
         I2C_OLED_Move_Cursor(1, 0);
         I2C_OLED_Draw(BMP_LOADING_EMPTY, 128);
         I2C_OLED_Move_Cursor(1, 0);
+        test_result = GPIO_config(test_position);
         testing_active = 1;
     }
     else
@@ -198,7 +183,7 @@ void IC_Tester_Results(void)
         {
             if (test_result & (1 << i))
             {
-                dec = i+1;
+                dec = i + 1;
                 i = 16;
             }
         }
@@ -227,5 +212,8 @@ void IC_Tester_Results(void)
         I2C_OLED_Print("                ");
         SysTick_Wait1ms(5000);
     }
+    test_result = 0;
+    strcpy(test_name, "74LS");
+    test_position = 0;
     tester_state = INIT;
 }
