@@ -8,6 +8,8 @@ uint8_t testing_progression = 0;
 uint8_t testing_active = 0;
 uint8_t testing_progression_current = 0;
 
+uint8_t test_result = 0;
+
 enum Tester_State
 {
     INIT,
@@ -128,9 +130,10 @@ void IC_Tester_Select(void)
         if (IC_Tester_Available())
         {
             char name[10];
-            strcpy(name, "74LS"); 
+            strcpy(name, "74LS");
             strcat(name, selected_ic);
-            if(name[6] == '`') name[6] = ' ';
+            if (name[6] == '`')
+                name[6] = ' ';
             I2C_OLED_Move_Cursor(0, center_string_position("74LS08"));
             I2C_OLED_Print(name);
             I2C_OLED_Move_Cursor(1, center_string_position("encontrado"));
@@ -154,11 +157,14 @@ void IC_Tester_Select(void)
 
 uint8_t IC_Tester_Available(void)
 {
+    //!!MUDAR!! chama função que verifica vetor e vê se valor existe
+    //          só precisa dizer se existe ou não (1 ou 0)
     return 1;
 }
 
 void IC_Tester_Test(void)
 {
+    test_result = 0x20; // !!MUDAR!! chama função que faz o teste aqui
     if (!testing_active)
     {
         I2C_OLED_Move_Cursor(1, 0);
@@ -184,11 +190,42 @@ void IC_Tester_Test(void)
 
 void IC_Tester_Results(void)
 {
-    I2C_OLED_Move_Cursor(3, 0);
-    I2C_OLED_Print("                ");
-    I2C_OLED_Print("Nenhum problema ");
-    I2C_OLED_Print("   detectado    ");
-    I2C_OLED_Print("                ");
-    SysTick_Wait1ms(5000);
+    if (test_result)
+    {
+        uint32_t dec = 0;
+
+        for (uint8_t i = 0; i < 16; i++)
+        {
+            if (test_result & (1 << i))
+            {
+                dec = i+1;
+                i = 16;
+            }
+        }
+        uint8_t ascii_dec[2];
+
+        ascii_dec[0] = dec / 10 + '0';
+        ascii_dec[1] = dec % 10 + '0';
+
+        char problem_string[16] = "  XX detectado  ";
+        problem_string[3] = ascii_dec[1];
+        problem_string[2] = ascii_dec[0];
+        I2C_OLED_Move_Cursor(3, 0);
+        I2C_OLED_Print("                ");
+        I2C_OLED_Print("Problema no pino");
+        I2C_OLED_Print(problem_string);
+        I2C_OLED_Print("                ");
+        SysTick_Wait1ms(5000);
+    }
+    else
+    {
+
+        I2C_OLED_Move_Cursor(3, 0);
+        I2C_OLED_Print("                ");
+        I2C_OLED_Print("Nenhum problema ");
+        I2C_OLED_Print("   detectado    ");
+        I2C_OLED_Print("                ");
+        SysTick_Wait1ms(5000);
+    }
     tester_state = INIT;
 }

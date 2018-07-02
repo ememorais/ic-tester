@@ -1,5 +1,13 @@
 #include "i2c.h"
 
+#define LCD_OFFLINE
+
+#ifdef LCD_OFFLINE
+    char offline_strings[50][16];
+    uint8_t offline_iterator = 0;
+#endif
+
+
 uint32_t error = 0;
 uint32_t busy = 0;
 
@@ -127,6 +135,13 @@ void I2C_OLED_Move_Cursor(uint8_t row, uint8_t column)
 
 void I2C_OLED_Print(char* string)
 {
+
+    #ifdef LCD_OFFLINE
+        strcpy(offline_strings[offline_iterator], string);
+        strcpy(offline_strings[offline_iterator+1], " ");
+        if(++offline_iterator >= 50) offline_iterator = 0;
+    #endif
+
 
     while (*string != '\0')
     {
